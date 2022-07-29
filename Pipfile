@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[[source]]
+url = "https://download.pytorch.org/whl/cpu"
+verify_ssl = true
+name = "pytorch"
+
+[packages]
+torch = {version="*", index="pytorch"}
+torchvision = {version="*", index="pytorch"}
+matplotlib = "*"
+numpy = "*"
+scipy = "*"
+tqdm = "*"
+adversarial-robustness-toolbox = "*"
+six = "*"
+scikit-learn = "*"
+pillow = "*"
+gputil = "*"
+mlconfig = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
