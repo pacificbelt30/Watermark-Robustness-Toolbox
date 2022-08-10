@@ -23,6 +23,7 @@ gputil = "*"
 mlconfig = "*"
 
 [dev-packages]
+pynvim = "*"
 
 [requires]
 python_version = "3.10"
