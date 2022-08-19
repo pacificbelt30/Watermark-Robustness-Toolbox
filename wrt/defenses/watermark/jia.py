@@ -352,6 +352,7 @@ class Jia(Watermark):
         batch_size = train_loader.batch_size
         with tqdm(train_loader) as train_loop:
             for batch_id, (x, y) in enumerate(train_loop):
+                y = y.to(torch.int64)
                 x, y = x.to(device), torch.eye(self.num_classes)[y].to(device)
 
                 # Train on the batch of benign training data. Adjust batch norm every second layer.
