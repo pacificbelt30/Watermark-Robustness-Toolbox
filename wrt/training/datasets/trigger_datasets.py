@@ -7,6 +7,7 @@ from torch.utils import data
 from torch.utils.data import Dataset
 from torchvision import transforms
 from torchvision.datasets.utils import download_and_extract_archive
+from torchvision.datasets.utils import download_url, extract_archive, _urlretrieve
 
 
 class Trigger(Dataset):
@@ -46,14 +47,17 @@ class AdiTrigger(Trigger):
         super().__init__(os.path.abspath(self.root), transform)
 
     def _check_integrity(self):
-        return os.path.isdir(self.root)
+        return False if not os.path.isdir(self.root) else (True if (len(os.listdir(self.root)) > 0) else False)
 
     def download(self):
         if self._check_integrity():
             print("Adi trigger set was already downloaded.")
             return
         os.makedirs(self.root, exist_ok=True)
-        download_and_extract_archive(self.url, self.root, filename=self.filename, remove_finished=True)
+        # download_and_extract_archive(self.url, self.root, filename=self.filename, remove_finished=True)
+        archive = os.path.join(self.root, self.filename)
+        _urlretrieve(self.url, archive)
+        extract_archive(archive, self.root, remove_finished=True)
 
 
 @mlconfig.register
