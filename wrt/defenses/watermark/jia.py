@@ -532,7 +532,7 @@ class Jia(Watermark):
 
         x_wm, y_wm = x_wm[:keylength], np.argmax(y_ce_wm[:keylength], axis=1)
 
-        jia_loss.exit()
+        # jia_loss.exit()
         self.classifier.loss = ce_loss
         self.classifier.lr *= reduced_lr_rate
         self.classifier.model.eval()
@@ -546,6 +546,7 @@ class Jia(Watermark):
             tmp_optimizer = deepcopy(self.get_classifier().optimizer)
 
             # remove temps from the optimizer params
+            """
             try:
                 for i in reversed(range(len(tmp_optimizer.param_groups))):
                     param_group = tmp_optimizer.param_groups[i]
@@ -554,16 +555,61 @@ class Jia(Watermark):
             except:
                 print("Error, could not remove temps from optimizer")
                 pass
+            """
 
             checkpoint = {
                 'model': self.get_classifier().model.state_dict(),
-                'optimizer': tmp_optimizer.state_dict(),
+                # 'optimizer': tmp_optimizer.state_dict(),
+                'optimizer': self.state_dict(),
                 'x_wm': x_wm,
                 'y_wm': y_wm,
             }
             self.save('best.pth', path=output_dir, checkpoint=checkpoint)
 
         return x_wm, y_wm
+
+    def state_dict(self,exclude_temp=True):
+        tmp_optimizer = deepcopy(self.get_classifier().optimizer)
+
+        param_mappings = {}
+        temps_param_mappings = {}
+        start_index = 0
+        temps_start_index = 0
+
+        def pack_group(group):
+            nonlocal start_index
+            nonlocal temps_start_index
+            packed = {k: v for k, v in group.items() if k != 'params'}
+            if 'name' in group and group['name'] == 'temps':
+                temps_param_mappings.update({id(p): i for i, p in enumerate(group['params'], temps_start_index) if id(p) not in param_mappings})
+                packed['params'] = [temps_param_mappings[id(p)] for p in group['params']]
+                temps_start_index += len(packed['params'])
+                return None
+            else:
+                param_mappings.update({id(p): i for i, p in enumerate(group['params'], start_index) if id(p) not in param_mappings})
+                packed['params'] = [param_mappings[id(p)] for p in group['params']]
+                start_index += len(packed['params'])
+            return packed
+
+        param_groups = [pack_group(g) for g in tmp_optimizer.param_groups if pack_group(g) is not None]
+        packed_state = {}
+        for k, v in tmp_optimizer.state.items():
+            if id(k) not in param_mappings:
+                if id(k) in temps_param_mappings:
+                    continue
+                else:
+                    raise KeyError(id(k))
+            else:
+                if isinstance(k, torch.Tensor):
+                    packed_state[param_mappings[id(k)]] = v
+                else:
+                    packed_state[k] = v
+
+        return {
+            'state': packed_state,
+            'param_groups': param_groups
+        }
+
 
     def load(self, filename, path=None, **load_kwargs: dict):
         """ Loads parameters necessary for validating a watermark.
