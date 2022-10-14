@@ -5,6 +5,7 @@ create:
 remove:
   name: label_smoothing_removal
   epochs: 5
+  top_k: 3
   epsilon: 0.3
 
 dataset:
