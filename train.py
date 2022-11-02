@@ -80,8 +80,8 @@ def main():
                                             image_size=config.model.image_size,
                                             num_classes=config.model.num_classes)
 
-    train_loader = config.dataset(train=True)
-    valid_loader = config.dataset(train=False)
+    train_loader = config.dataset(train=True,image_size=config.model.image_size)
+    valid_loader = config.dataset(train=False,image_size=config.model.image_size)
 
     trainer = config.trainer(model=model, train_loader=train_loader, valid_loader=valid_loader,
                              scheduler=scheduler,  device=device, output_dir=output_dir)
