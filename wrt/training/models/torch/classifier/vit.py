@@ -3,10 +3,12 @@ import torchvision
 
 import os
 
+import numpy as np
+
 from wrt.training.models.torch.classifier.tf_resnet import resnet101
 
 # from models.modeling import CONFIGS, VisionTransformer
-from ViT-pytorch.models.modeling import CONFIGS, VisionTransformer
+from ViT.models.modeling import CONFIGS, VisionTransformer
 
 from torchinfo import summary
 
