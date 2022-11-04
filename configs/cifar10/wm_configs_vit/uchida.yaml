@@ -33,6 +33,6 @@ dataset:
   num_workers: 16
 
 name: uchida
-output_dir: outputs/cifar10/wm/uchida/
+output_dir: outputs/cifar10/wm/uchida_vit/
 
 

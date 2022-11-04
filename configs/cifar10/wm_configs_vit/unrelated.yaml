@@ -43,6 +43,6 @@ dataset:
   num_workers: 16
 
 name: unrelated
-output_dir: outputs/cifar10/wm/unrelated/
+output_dir: outputs/cifar10/wm/unrelated_vit/
 
 

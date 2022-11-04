@@ -32,6 +32,6 @@ dataset:
   num_workers: 16
 
 name: deepmarks
-output_dir: outputs/cifar10/wm/deepmarks/
+output_dir: outputs/cifar10/wm/deepmarks_vit/
 
 

@@ -50,6 +50,6 @@ dataset:
   download: False
 
 name: content
-output_dir: outputs/cifar10/wm/content/
+output_dir: outputs/cifar10/wm/content_vit/
 
 
