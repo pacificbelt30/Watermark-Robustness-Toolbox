@@ -4,7 +4,8 @@ import warnings
 import mlconfig
 import numpy as np
 import torch
-from PIL import Image
+from PIL import Image, ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 from torch.utils import data
 from torch.utils.data import Dataset
 from torchvision import transforms
