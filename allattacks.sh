@@ -5,7 +5,7 @@ wm_dir="outputs/cifar10/wm/jia/00000_jia"
 # wm_dir="outputs/cifar10/wm/uchida/00000_uchida"
 atk_conf="configs/cifar10/attack_configs_experiments/"
 log_dir="log/"
-arr=`ls configs/cifar10/attack_configs | grep yaml`
+arr=`ls $atk_conf | grep yaml`
 #arr=`ls configs/cifar10/attack_configs | grep -v 'combined_attack[1-9]*.yaml'`
 #arr=`ls configs/cifar10/attack_configs | grep 'combined_attack[1-9]*.yaml'`
 echo $arr
