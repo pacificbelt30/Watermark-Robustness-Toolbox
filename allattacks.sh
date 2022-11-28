@@ -1,7 +1,9 @@
 #!/bin/bash
-wm_dir="outputs/cifar10/wm/jia_vit/00002_jia"
-#wm_dir="outputs/cifar10/wm/uchida/00000_uchida"
-atk_conf="configs/cifar10/attack_configs/"
+# wm_dir="outputs/cifar10/wm/jia_vit/00002_jia"
+wm_dir="outputs/cifar10/wm/jia/00000_jia"
+# wm_dir="outputs/cifar10/wm/blackmarks/00000_blackmarks"
+# wm_dir="outputs/cifar10/wm/uchida/00000_uchida"
+atk_conf="configs/cifar10/attack_configs_experiments/"
 log_dir="log/"
 arr=`ls configs/cifar10/attack_configs | grep yaml`
 #arr=`ls configs/cifar10/attack_configs | grep -v 'combined_attack[1-9]*.yaml'`
