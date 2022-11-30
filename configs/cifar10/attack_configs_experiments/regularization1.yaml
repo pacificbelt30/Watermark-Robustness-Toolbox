@@ -20,4 +20,4 @@ dataset:
   num_workers: 2
 
 name: regularization
-output_dir: outputs/cifar10/attacks/regularization/
+output_dir: outputs/cifar10/attack_experiments/regularization/

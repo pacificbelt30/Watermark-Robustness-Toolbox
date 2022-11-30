@@ -55,4 +55,4 @@ scheduler2:
   gamma: 0.1
 
 name: transfer_transfer_learning
-output_dir: outputs/cifar10/attacks/transfer_transfer_learning/
+output_dir: outputs/cifar10/attack_experiments/transfer_transfer_learning/

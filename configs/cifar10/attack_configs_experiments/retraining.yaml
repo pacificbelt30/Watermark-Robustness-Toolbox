@@ -34,4 +34,4 @@ scheduler:
 
 true_labels: False
 name: retraining
-output_dir: outputs/cifar10/attacks/retraining/
+output_dir: outputs/cifar10/attack_experiments/retraining/

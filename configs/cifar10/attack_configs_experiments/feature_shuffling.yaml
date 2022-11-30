@@ -15,4 +15,4 @@ dataset:
 
 true_labels: True
 name: feature_shuffling
-output_dir: outputs/cifar10/attacks/feature_shuffling/
+output_dir: outputs/cifar10/attack_experiments/feature_shuffling/

@@ -34,4 +34,4 @@ scheduler:
   gamma: 0.2
 
 name: cross_architecture_retraining
-output_dir: outputs/cifar10/attacks/cross_architecture_retraining/
+output_dir: outputs/cifar10/attack_experiments/cross_architecture_retraining/

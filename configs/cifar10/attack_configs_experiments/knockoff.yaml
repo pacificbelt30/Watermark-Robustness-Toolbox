@@ -42,4 +42,4 @@ scheduler:
 
 true_labels: True
 name: knockoff
-output_dir: outputs/cifar10/attacks/knockoff/
+output_dir: outputs/cifar10/attack_experiments/knockoff/

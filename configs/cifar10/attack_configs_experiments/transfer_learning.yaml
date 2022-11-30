@@ -43,4 +43,4 @@ scheduler:
 
 true_labels: True
 name: transfer_learning
-output_dir: outputs/cifar10/attacks/transfer_learning/
+output_dir: outputs/cifar10/attack_experiments/transfer_learning/

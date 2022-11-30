@@ -32,4 +32,4 @@ dataset:
 
 true_labels: False
 name: neural_cleanse_partial_unlearning
-output_dir: outputs/cifar10/attacks/neural_cleanse_partial_unlearning/
+output_dir: outputs/cifar10/attack_experiments/neural_cleanse_partial_unlearning/
