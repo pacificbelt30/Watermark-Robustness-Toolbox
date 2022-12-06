@@ -11,6 +11,7 @@ name = "pytorch"
 [packages]
 torch = {version="*", index="pytorch"}
 torchvision = {version="*", index="pytorch"}
+torchinfo = "*"
 matplotlib = "*"
 numpy = "*"
 scipy = "*"
@@ -20,7 +21,9 @@ six = "*"
 scikit-learn = "*"
 pillow = "*"
 gputil = "*"
+tensorboard = "*"
 mlconfig = "*"
+ml_collections = "*"
 
 [dev-packages]
 pynvim = "*"

@@ -4,8 +4,10 @@ create:
   num_classes: 10
   extract_kwargs:
     extract_epochs: 4
+    extract_steps: 10
+    finetune_steps: 30
     finetune_epochs: 8
-    lmbda: 0.01
+    lmbda: 0.05
     batch_size: 64
 
 remove:
@@ -31,5 +33,5 @@ dataset:
   num_workers: 2
 
 true_labels: False
-name: neural_cleanse_partial_unlearning
-output_dir: outputs/cifar10/attacks/neural_cleanse_partial_unlearning/
+name: neural_cleanse_partial_unlearning1
+output_dir: outputs/cifar10/attack_experiments/neural_cleanse_partial_unlearning1/

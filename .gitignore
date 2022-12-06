@@ -1,2 +1,4 @@
 venv/
 Pipfile.lock
+checkpoint/
+outputs/cifar10/

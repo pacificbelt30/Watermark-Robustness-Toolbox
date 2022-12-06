@@ -1,0 +1,6 @@
+[submodule "ViT-pytorch"]
+	path = ViT-pytorch
+	url = https://github.com/pacificbelt30/ViT-pytorch.git
+[submodule "ViT"]
+	path = ViT
+	url = https://github.com/pacificbelt30/ViT-pytorch.git
