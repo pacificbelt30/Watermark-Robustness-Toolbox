@@ -197,6 +197,26 @@ def _normalize(apply_normalization):
         return mean, std
     return np.array([0, 0, 0]).reshape((1, 3, 1, 1)), np.array([1, 1, 1]).reshape((1, 3, 1, 1))
 
+def _augment224(apply_augmentation: bool, train: bool, image_size: int, normalize: Normalize) -> Compose:
+    if apply_augmentation:
+        if train:
+            return transforms.Compose([
+                transforms.RandomResizedCrop((image_size, image_size), scale=(0.05, 1.0)),
+                transforms.ToTensor(),
+                normalize,
+            ])
+        else:
+            return transforms.Compose([
+                transforms.Resize((image_size, image_size)),
+                transforms.ToTensor(),
+                normalize,
+            ])
+
+    return transforms.Compose([
+        transforms.Resize(image_size),
+        transforms.ToTensor(),
+        normalize,
+    ])
 
 def _augment(apply_augmentation: bool, train: bool, image_size: int, normalize: Normalize) -> Compose:
     if apply_augmentation:
@@ -234,7 +254,11 @@ class CIFAR10DataLoader(WRTDataLoader):
 
         if (source_model is not None) and train:
             # Predict stolen labels for the training data without augmentation.
-            transform: Compose = _augment(apply_augmentation=False,
+
+            transform_func = _augment
+            if image_size > 32:
+                transform_func = _augment224
+            transform: Compose = transform_func(apply_augmentation=False,
                                           train=train,
                                           image_size=image_size,
                                           normalize=normalize)
@@ -244,7 +268,7 @@ class CIFAR10DataLoader(WRTDataLoader):
             augmented_dataset = predict_dataset
             if apply_augmentation:
                 # Load images with augmentation during training (if desired)
-                transform: Compose = _augment(apply_augmentation=apply_augmentation,
+                transform: Compose = transform_func(apply_augmentation=apply_augmentation,
                                               train=train,
                                               image_size=image_size,
                                               normalize=normalize)
@@ -269,7 +293,11 @@ class CIFAR10DataLoader(WRTDataLoader):
                                                num_workers=num_workers)
         else:
             # No stolen labels.
-            transform: Compose = _augment(apply_augmentation, train, image_size, normalize)
+
+            transform_func = _augment
+            if image_size > 32:
+                transform_func = _augment224
+            transform: Compose = transform_func(apply_augmentation, train, image_size, normalize)
             dataset = datasets.CIFAR10(root, train=train, transform=transform, download=download)
             if train:
                 dataset = CIFAR10ShuffledSubset(dataset=dataset, mode=subset, n_max=n_train)
