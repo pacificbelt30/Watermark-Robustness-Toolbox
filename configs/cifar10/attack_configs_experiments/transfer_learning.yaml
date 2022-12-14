@@ -3,7 +3,7 @@ create:
   lr: 0.001
   freeze: False
   num_classes: 10
-  image_size: 32
+  image_size: 64
   parent_shape: 224
   train_all_params_after_n_batches: 0
   removed_layers: ['fc']
@@ -13,7 +13,7 @@ create:
 
 surrogate_model:
   name: resnet34
-  image_size: 32
+  image_size: 64
   num_classes: 10
   pretrained: True
 
@@ -26,7 +26,7 @@ dataset:
   subset: attacker
   root: ~/.wrt/data
   batch_size: 64
-  image_size: 32
+  image_size: 64
   num_workers: 2
 
 optimizer:

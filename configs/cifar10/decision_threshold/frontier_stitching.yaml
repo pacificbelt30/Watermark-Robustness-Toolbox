@@ -7,7 +7,7 @@ secret_keys:
   name: wm_frontier_stitching_keygen
   key_expansion_factor: 10
   batch_size: 64
-  image_size: 32
+  image_size: 64
   num_classes: 10
 
 load_pretrained_source_model:
@@ -16,12 +16,12 @@ load_pretrained_source_model:
 
 source_model_architecture:
   name: cifar_wide_resnet_features
-  image_size: 32
+  image_size: 64
   num_classes: 10
 
 null_model_architecture:
   name: cifar_wide_resnet
-  image_size: 32
+  image_size: 64
   num_classes: 10
 
 optimizer:
@@ -63,7 +63,7 @@ null_models:
           'outputs/cifar10/null_models/resnet/00029_null_model/best.pth'
   ]
   num_classes: 10
-  image_size: 32
+  image_size: 64
 
 wm_dataset:
   name: CIFAR10DataLoader
@@ -73,7 +73,7 @@ wm_dataset:
   train: True
   root: ~/.wrt/data
   batch_size: 64
-  image_size: 32
+  image_size: 64
   num_workers: 16
 
 dataset:

@@ -4,12 +4,12 @@ wm_scheme:
 
 source_model_architecture:
   name: cifar_wide_resnet_features
-  image_size: 32
+  image_size: 64
   num_classes: 10
 
 null_model_architecture:
   name: cifar_wide_resnet
-  image_size: 32
+  image_size: 64
   num_classes: 10
 
 optimizer:
@@ -51,26 +51,26 @@ null_models:
           'outputs/cifar10/null_models/resnet/00029_null_model/best.pth'
   ]
   num_classes: 10
-  image_size: 32
+  image_size: 64
 
 secret_keys:
   name: wm_adi_keygen
   num_classes: 10
-  image_size: 32
+  image_size: 64
 
 dataset:
   name: CIFAR10DataLoader
   subset: all
   root: ~/.wrt/data
   batch_size: 128
-  image_size: 32
+  image_size: 64
   num_workers: 16
 
 wm_dataset:
   name: AdiTriggerDataLoader
   root: ~/.wrt/data
   batch_size: 128
-  image_size: 32
+  image_size: 64
   num_workers: 16
 
 name: adi

@@ -17,7 +17,7 @@ subset_dataset:
   subset: attacker
   root: ~/.wrt/data
   batch_size: 64
-  image_size: 32
+  image_size: 64
   num_workers: 2
   class_labels: [3, 4]
 
@@ -27,7 +27,7 @@ dataset:
   root: ~/.wrt/data
   download: False
   batch_size: 64
-  image_size: 32
+  image_size: 64
   num_workers: 2
 
 true_labels: False

@@ -12,7 +12,7 @@ dataset:
   root: ~/.wrt/data
   download: False
   batch_size: 64
-  image_size: 32
+  image_size: 64
   num_workers: 2
 
 # We do not use the dataset so we can set the labels to true.
