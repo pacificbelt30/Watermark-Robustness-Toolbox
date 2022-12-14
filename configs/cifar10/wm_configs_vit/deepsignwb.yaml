@@ -24,6 +24,7 @@ source_model:
   name: cifar_vit
   image_size: 32
   num_classes: 10
+  pretrained_model: True
 
 optimizer:
   name: SGD
