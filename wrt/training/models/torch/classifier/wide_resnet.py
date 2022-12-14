@@ -171,6 +171,9 @@ class wide_basic(nn.Module):
 class WideResNet(nn.Module):
     def __init__(self, n, widen_factor, dropout_rate, num_classes):
         super(WideResNet, self).__init__()
+        origin_img_size = 32
+        img_size = 64
+        rate = img_size//origin_img_size
         self.in_planes = 16
 
         k = widen_factor
@@ -182,7 +185,7 @@ class WideResNet(nn.Module):
         self.layer2 = self._wide_layer(wide_basic, nStages[2], n, dropout_rate, stride=2)
         self.layer3 = self._wide_layer(wide_basic, nStages[3], n, dropout_rate, stride=2)
         self.bn1 = nn.BatchNorm2d(nStages[3], momentum=0.9)
-        self.linear = nn.Linear(nStages[3], num_classes)
+        self.linear = nn.Linear(nStages[3]*rate*2, num_classes)
 
         self.shuffle_dict = {
             "conv1": np.arange(len(self.conv1.weight.data))
@@ -232,6 +235,9 @@ class WideResNet(nn.Module):
 class WideResNet_ArgMax(nn.Module):
     def __init__(self, n, widen_factor, dropout_rate, num_classes):
         super(WideResNet_ArgMax, self).__init__()
+        origin_img_size = 32
+        img_size = 64
+        rate = img_size//origin_img_size
         self.in_planes = 16
 
         k = widen_factor
@@ -243,7 +249,7 @@ class WideResNet_ArgMax(nn.Module):
         self.layer2 = self._wide_layer(wide_basic, nStages[2], n, dropout_rate, stride=2)
         self.layer3 = self._wide_layer(wide_basic, nStages[3], n, dropout_rate, stride=2)
         self.bn1 = nn.BatchNorm2d(nStages[3], momentum=0.9)
-        self.linear = nn.Linear(nStages[3], num_classes)
+        self.linear = nn.Linear(nStages[3]*rate*2, num_classes)
 
     def _wide_layer(self, block, planes, num_blocks, dropout_rate, stride):
         strides = [stride] + [1] * (int(num_blocks) - 1)
