@@ -33,5 +33,6 @@ scheduler:
   milestones: [20, 35, 50]
   gamma: 0.2
 
+true_labels: False
 name: cross_architecture_retraining
 output_dir: outputs/cifar10/attacks/cross_architecture_retraining/
