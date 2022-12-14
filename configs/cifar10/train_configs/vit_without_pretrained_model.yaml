@@ -6,7 +6,7 @@ model:
   name: cifar_vit
   num_classes: 10
   image_size: 32
-  pretrained_model: True
+  pretrained_model: False
 
 dataset:
   name: CIFAR10DataLoader
@@ -30,4 +30,4 @@ scheduler:
 
 
 name: vit
-output_dir: outputs/cifar10/null_models/vit/
+output_dir: outputs/cifar10/null_models/vit_wpm/

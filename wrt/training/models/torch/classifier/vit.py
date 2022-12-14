@@ -19,5 +19,6 @@ def cifar_vit(dropout=0, **kwargs):
     pretrained_model = "./checkpoint/ViT-B_16.npz"
     vit = VisionTransformer(config=CONFIGS[model_type],img_size=kwargs['image_size'],num_classes=kwargs['num_classes'],zero_head=True,vis=False,only_logits=True)
     summary(vit, (256,3,32,32),depth=4)
-    vit.load_from(np.load(pretrained_model))
+    if kwargs['pretrained']:
+        vit.load_from(np.load(pretrained_model))
     return vit
