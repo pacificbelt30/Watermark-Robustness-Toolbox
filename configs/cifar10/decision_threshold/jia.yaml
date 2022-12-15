@@ -1,7 +1,9 @@
 wm_scheme:
   name: wm_jia
   snnl_weight: 1
-  pos: (0, 2, 2),
+  trigger_width: 10
+  trigger_height: 10
+  pos: (0, 4, 4),
   num_classes: 10
 
 secret_keys:

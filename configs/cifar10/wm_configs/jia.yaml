@@ -4,7 +4,9 @@ wm_scheme:
   num_classes: 10
   alternating_rate: 2
   rate: 30
-  pos: (0, 2, 2),
+  trigger_width: 10
+  trigger_height: 10
+  pos: (0, 4, 4),
 
 embed:
   name: wm_jia_embed
