@@ -25,8 +25,6 @@ def load_result_from_json(json_path):
     plot_wm_acc(os.path.join(base,'wm_acc.png'),'Watermark Accuracy',[d[0] for d in vit_result],[d[2] for d in vit_result],[d[0] for d in res_result],[d[2] for d in res_result],'ViT-16_B','WideResNet','Methods','wm_acc')
     plot_wm_acc(os.path.join(base,'time.png'),'TIME',[d[0] for d in vit_result],[d[3] for d in vit_result],[d[0] for d in res_result],[d[3] for d in res_result],'ViT-16_B','WideResNet','Methods','time [s]')
 
-
-
 def plot_wm_acc(filename,main_title,x1,y1,x2,y2,title1,title2,xlabel,ylabel,lim=(0.0,1.0)):
     print('plot')
     fig = plt.figure(figsize=(16,9))

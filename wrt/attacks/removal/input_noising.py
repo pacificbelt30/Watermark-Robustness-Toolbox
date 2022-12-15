@@ -6,7 +6,8 @@ This module implements the White box attack.
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
-from collections import Callable
+from collections import Callable # Under Python 3.10
+# from collections.abc import Callable # Python 3.10 or later
 
 import numpy as np
 import mlconfig
