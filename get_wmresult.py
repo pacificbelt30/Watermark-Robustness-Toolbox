@@ -45,7 +45,8 @@ def main():
         result_json['result'][-1]['name'] = dir[0]
         try:
             with open(os.path.join(dir[1],'result.json'),'r') as f:
-                result_json['result'][-1]['result'] = f.read()
+                import json
+                result_json['result'][-1]['result'] = json.loads(f.read())
         except:
             import traceback
             traceback.print_exc()
@@ -55,7 +56,9 @@ def main():
     pre_zero_str = '0'*(5-len(str(num_files)))
     try:
         with open(os.path.join(args.output_dir,f'result_{pre_zero_str}{num_files}.json'),'w') as f:
-            print(result_json,file=f)
+            import json
+            json.dump(result_json,f,indent=2)
+            # print(result_json,file=f)
     except:
         import traceback
         traceback.print_exc()
