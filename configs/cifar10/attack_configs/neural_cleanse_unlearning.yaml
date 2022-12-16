@@ -4,8 +4,10 @@ create:
   num_classes: 10
   extract_kwargs:
     extract_epochs: 4
+    extract_steps: 10
+    finetune_steps: 30
     finetune_epochs: 8
-    lmbda: 0.01
+    lmbda: 0.05
     batch_size: 64
 
 remove:
