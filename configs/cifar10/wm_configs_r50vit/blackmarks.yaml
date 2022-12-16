@@ -23,7 +23,7 @@ source_model:
 
 optimizer:
   name: SGD
-  lr: 0.1
+  lr: 0.01
   weight_decay: 5.e-4
   momentum: 0.9
   nesterov: true
