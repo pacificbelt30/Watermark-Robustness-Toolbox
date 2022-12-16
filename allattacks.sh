@@ -1,6 +1,7 @@
 #!/bin/bash
+wm_dir = $1
 # wm_dir="outputs/cifar10/wm/jia_vit/00002_jia"
-wm_dir="outputs/cifar10/wm/jia/00000_jia"
+# wm_dir="outputs/cifar10/wm/jia/00000_jia"
 # wm_dir="outputs/cifar10/wm/blackmarks/00000_blackmarks"
 # wm_dir="outputs/cifar10/wm/uchida/00000_uchida"
 atk_conf="configs/cifar10/attack_configs_experiments/"
