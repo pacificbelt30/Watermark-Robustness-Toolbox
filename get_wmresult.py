@@ -23,6 +23,59 @@ def parse_args():
     parser.add_argument("--gpu", type=str, default=None, help="Which GPU to use. Defaults to GPU with least memory.")
     return parser.parse_args()
 
+"""
+ModelArch1
+    - scheme1_dir
+        - result.json
+    - scheme2_dir
+        - result.json
+ModelArch2
+    - scheme1_dir
+        - result.json
+    - scheme2_dir
+        - result.json
+"""
+def main2():
+    args = parse_args()
+
+    all_result_dir = [os.path.abspath(os.path.join(args.result_dir, x)) for x in os.listdir(args.result_dir)]
+    all_result_dir = sorted(all_result_dir,reverse=True)
+    print(all_result_dir)
+    n = len(all_result_dir)
+    check_dir = []
+    for i, dir in enumerate(all_result_dir):
+        wmdir = [os.path.abspath(os.path.join(dir, x)) for x in os.listdir(dir)]
+        # print((os.path.basename(dir),sorted(wmdir,reverse=True)[0]))
+        check_dir.append((os.path.basename(dir),sorted(wmdir,reverse=True)[0]))
+
+    result_json = {'result':[],'name':os.path.basename(args.result_dir)}
+    for i, dir in enumerate(all_result_dir):
+        if not os.path.isfile(os.path.join(dir,'result.json')):
+            print(f'result.json does not exist in {dir}.')
+            continue
+        result_json['result'].append({})
+        result_json['result'][-1]['name'] = os.path.basename(dir).split('_')[1]
+        try:
+            with open(os.path.join(dir,'result.json'),'r') as f:
+                import json
+                result_json['result'][-1]['result'] = json.loads(f.read())
+        except:
+            import traceback
+            traceback.print_exc()
+            continue
+    # print(result_json)
+    num_files = len(os.listdir(args.output_dir))
+    pre_zero_str = '0'*(5-len(str(num_files)))
+    try:
+        with open(os.path.join(args.output_dir,f'result_{pre_zero_str}{num_files}.json'),'w') as f:
+            import json
+            print('save json in:', os.path.join(args.output_dir,f'result_{pre_zero_str}{num_files}.json'))
+            json.dump(result_json,f,indent=2)
+            # print(result_json,file=f)
+    except:
+        import traceback
+        traceback.print_exc()
+
 def main():
     args = parse_args()
 
@@ -65,4 +118,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main2()

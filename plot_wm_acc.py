@@ -1,57 +1,61 @@
 import matplotlib.pyplot as plt
 import json
 import os
+import numpy as np
 
-def load_result_from_json(json_path):
-    if not os.path.isfile(json_path):
+def load_result_from_jsons(json_paths,arch=['WideResNet','ViT','R50+ViT','R50+ViT_WPM']):
+    labels = ['adi','content','unrelated','noise','blackmarks','frontier','jia']
+    if len(json_paths) != len(arch):
+        print('Arg length not suitable')
         return
-    
-    try:
-        with open(json_path,'r') as f:
-            result = json.loads(f.read())
-    except:
-        import traceback
-        traceback.print_exc()
 
-    vit_result = []
-    res_result = []
-    for i, res in enumerate(result['result']):
-        if 'vit' in res['name']:
-            vit_result.append((res['name'].replace('_vit',''),res['result']['test_acc'],res['result']['wm_acc'],res['result']['time']))
-        else:
-            res_result.append((res['name'],res['result']['test_acc'],res['result']['wm_acc'],res['result']['time']))
+    exist_path = []
+    for f in json_paths:
+        if os.path.isfile(f):
+            exist_path.append(f)
+    print(exist_path)
+    result = []
+    for file in exist_path:
+        try:
+            with open(file,'r') as f:
+                result.append(json.loads(f.read()))
+        except:
+            import traceback
+            traceback.print_exc()
     base = 'outputs/cifar10/png/'
-    plot_wm_acc(os.path.join(base,'acc.png'),'Accuracy',[d[0] for d in vit_result],[d[1] for d in vit_result],[d[0] for d in res_result],[d[1] for d in res_result],'ViT-16_B','WideResNet','Methods','test_acc')
-    plot_wm_acc(os.path.join(base,'wm_acc.png'),'Watermark Accuracy',[d[0] for d in vit_result],[d[2] for d in vit_result],[d[0] for d in res_result],[d[2] for d in res_result],'ViT-16_B','WideResNet','Methods','wm_acc')
-    plot_wm_acc(os.path.join(base,'time.png'),'TIME',[d[0] for d in vit_result],[d[3] for d in vit_result],[d[0] for d in res_result],[d[3] for d in res_result],'ViT-16_B','WideResNet','Methods','time [s]')
+    print(result)
+    plot_wm_acc(os.path.join(base,'wm_acc.png'),'WatermarkAccuracy',labels,result,'WatermarkAccuracy','wm_acc',arch)
+    plot_wm_acc(os.path.join(base,'acc.png'),'Accuracy',labels,result,'Accuracy','test_acc',arch)
+    plot_wm_acc(os.path.join(base,'time.png'),'Time',labels,result,'time[s]','time',arch)
+    return
 
-def plot_wm_acc(filename,main_title,x1,y1,x2,y2,title1,title2,xlabel,ylabel,lim=(0.0,1.0)):
+# def plot_wm_acc(filename,main_title,x,y,titles,xlabel,ylabel,key,lim=(0.0,1.0)):
+def plot_wm_acc(filename,main_title,x,y,ylabel,key,arch,lim=(0.0,1.0)):
+    margin = 0.01
+    total_width = 1 - margin
     print('plot')
-    fig = plt.figure(figsize=(16,9))
-    # plt.title(main_title)
-    ax = fig.add_subplot(121)
-    p = ax.bar(x1,y1,color=(0.2, 0.4, 0.6, 0.6))
-    ax.set_title(title1)
-    ax.set_xlabel(xlabel)
-    labels = ax.get_xticklabels()
-    plt.setp(labels, rotation=30, fontsize=10);
-    ax.set_ylabel(ylabel)
-    ax.set_ylim(lim[0],lim[1])
-    ax.bar_label(p, label_type='center')
-    # ax.legend()
-    ax = fig.add_subplot(122)
-    p = ax.bar(x2,y2,color=(0.2, 0.4, 0.6, 0.6))
-    ax.set_title(title2)
-    ax.set_xlabel(xlabel)
-    labels = ax.get_xticklabels()
-    plt.setp(labels, rotation=30, fontsize=10);
-    ax.set_ylabel(ylabel)
-    ax.set_ylim(lim[0],lim[1])
-    ax.bar_label(p, label_type='center')
-    # ax.legend()
-    # plt.show()
+    plt.figure(figsize=(8,5))
+    plt.title(main_title)
+    # labels = plt.get_xticklabels()
+    # plt.setp(labels, rotation=30, fontsize=10);
+    # plt.set_ylim(lim[0],lim[1])
+    for i,t in enumerate(y):
+        new_y = []
+        for j in range(len(x)):
+            # print('tetete',t)
+            for k,res in enumerate(t['result']):
+                if res['name'] == x[j]:
+                    new_y.append(res['result'][key])
+                    break
+        pos = np.array([i+1 for i in range(len(x))]) - total_width * ( 1 - (2*i+4)/len(x) )/2
+        plt.bar(pos,new_y,width=total_width/len(x))
+    plt.xticks([i+1 for i in range(len(x))],x)
+    plt.ylabel(ylabel)
+    plt.legend(arch,bbox_to_anchor=(1.0, 0),loc='lower right',borderaxespad=1,fontsize=10)
     plt.savefig(filename)
+    plt.close()
+
 
 if __name__ == "__main__":
-    path = './outputs/cifar10/json/result_00004.json'
-    load_result_from_json(path)
+    path = ['./outputs/cifar10/json/result_00016.json','./outputs/cifar10/json/result_00017.json','./outputs/cifar10/json/result_00018.json','./outputs/cifar10/json/result_00019.json']
+    load_result_from_jsons(path)
