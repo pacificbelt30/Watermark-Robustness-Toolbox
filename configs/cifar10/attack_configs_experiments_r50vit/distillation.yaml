@@ -5,7 +5,7 @@ create:
   alpha: 1.0
 
 surrogate_model:
-  name: cifar_wide_resnet_features
+  name: cifar_r50_vit
   image_size: 64
   num_classes: 10
 
