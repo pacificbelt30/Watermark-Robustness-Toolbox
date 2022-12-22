@@ -37,7 +37,7 @@ class TransferLearningAttack(RemovalAttack):
         def compute_loss(self, pred, true, x=None):
             import torch
             if true.dim() == 1:
-                true = torch.eye(pred.shape[-1])[true].to("cuda")
+                true = torch.eye(pred.shape[-1])[true.to("cpu")].to("cuda")
 
             logprobs = torch.nn.functional.log_softmax(pred, dim=1)
             return -(true * logprobs).sum() / pred.shape[0]
