@@ -19,7 +19,7 @@ def cifar_vit(dropout=0, **kwargs):
     pretrained_model = "./checkpoint/ViT-B_16.npz"
     vit = VisionTransformer(config=CONFIGS[model_type],img_size=kwargs['image_size'],num_classes=kwargs['num_classes'],zero_head=True,vis=False,only_logits=True)
     summary(vit, (256,3,kwargs['image_size'],kwargs['image_size']),depth=4)
-    if kwargs['pretrained_model']:
+    if 'pretrained_model' in kwargs and kwargs['pretrained_model']:
         vit.load_from(np.load(pretrained_model))
     return vit
 
@@ -29,6 +29,6 @@ def cifar_r50_vit(dropout=0, **kwargs):
     pretrained_model = "./checkpoint/R50+ViT-B_16.npz"
     vit = VisionTransformer(config=CONFIGS[model_type],img_size=kwargs['image_size'],num_classes=kwargs['num_classes'],zero_head=True,vis=False,only_logits=True)
     summary(vit, (256,3,kwargs['image_size'],kwargs['image_size']),depth=4)
-    if kwargs['pretrained_model']:
+    if 'pretrained_model' in kwargs and kwargs['pretrained_model']:
         vit.load_from(np.load(pretrained_model))
     return vit
