@@ -18,6 +18,7 @@ from tqdm import tqdm
 
 from wrt.utils import reserve_gpu, get_max_index
 from wrt.classifiers import PyTorchClassifier
+import wrt.training.models.torch.classifier as model_func
 import matplotlib.pyplot as plt
 
 
@@ -51,6 +52,39 @@ def load_null_models_resnet(create_model_fn, paths: List[str], image_size, num_c
         )
         yield wrapper
 
+@mlconfig.register
+def load_null_models_hybrid(device="cuda", image_size=64, num_classes=10, **kwargs):
+    create_model_fn = {"r50vit":model_func.cifar_r50_vit,"vit":model_func.cifar_vit,"resnet":model_func.cifar_wide_resnet}
+    models = [
+        {"name":"r50vit","path":"./outputs/cifar10/null_models_experiments/r50_vit/00000_null_model/"},
+        {"name":"r50vit","path":"./outputs/cifar10/null_models_experiments/r50_vit/00001_null_model/"},
+        {"name":"r50vit","path":"./outputs/cifar10/null_models_experiments/r50_vit/00002_null_model/"},
+        {"name":"r50vit","path":"./outputs/cifar10/null_models_experiments/r50_vit/00003_null_model/"},
+        {"name":"r50vit","path":"./outputs/cifar10/null_models_experiments/r50_vit/00004_null_model/"},
+        {"name":"r50vit","path":"./outputs/cifar10/null_models_experiments/r50_vit/00005_null_model/"},
+        {"name":"r50vit","path":"./outputs/cifar10/null_models_experiments/r50_vit/00006_null_model/"},
+        {"name":"r50vit","path":"./outputs/cifar10/null_models_experiments/r50_vit/00007_null_model/"},
+        {"name":"vit","path":"./outputs/cifar10/null_models_experiments/vit/00000_null_model/"},
+        {"name":"vit","path":"./outputs/cifar10/null_models_experiments/vit/00001_null_model/"},
+        {"name":"vit","path":"./outputs/cifar10/null_models_experiments/vit/00002_null_model/"},
+        {"name":"vit","path":"./outputs/cifar10/null_models_experiments/vit/00003_null_model/"},
+        {"name":"resnet","path":"./outputs/cifar10/null_models_experiments/resnet/00000_null_model/"},
+        {"name":"resnet","path":"./outputs/cifar10/null_models_experiments/resnet/00001_null_model/"},
+        {"name":"resnet","path":"./outputs/cifar10/null_models_experiments/resnet/00002_null_model/"},
+        {"name":"resnet","path":"./outputs/cifar10/null_models_experiments/resnet/00003_null_model/"}
+    ]
+
+    for model in models:
+        criterion = torch.nn.CrossEntropyLoss()
+        wrapper = PyTorchClassifier(
+            model=create_model_fn[model["name"]]().to(device),
+            clip_values=(0, 1),
+            loss=criterion,
+            optimizer=None,
+            input_shape=(3, image_size, image_size),
+            nb_classes=num_classes
+        )
+        yield wrapper
 
 @mlconfig.register
 def load_pretrained_model(source_model: PyTorchClassifier, filename: str):
