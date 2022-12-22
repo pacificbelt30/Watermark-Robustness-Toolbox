@@ -6,5 +6,5 @@ from .wide_resnet import cifar_wide_resnet, cifar_wide_resnet_features
 
 from .densenet import densenet_cifar, ImageNetDenseNetModel
 
-from .vit import cifar_vit
+from .vit import cifar_vit, cifar_r50_vit
 
