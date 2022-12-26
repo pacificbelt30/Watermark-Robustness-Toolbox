@@ -4,6 +4,7 @@ This script trains null models given a configuration file (see configs)
 
 import argparse
 import json
+import time
 from datetime import datetime
 from shutil import copyfile
 
