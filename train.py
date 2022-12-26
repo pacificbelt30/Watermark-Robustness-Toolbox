@@ -89,11 +89,14 @@ def main():
     if args.resume is not None:
         trainer.resume(args.resume)
 
+    start_time = time.time()
     train_metric = trainer.fit()
+    end_time = time.time()
+    total_elapsed = end_time - start_time
 
     test_acc = trainer.evaluate()[1].value
     with open(os.path.join(output_dir, "result.json"), "w") as f:
-        json.dump({"test_acc": test_acc}, f)
+        json.dump({"test_acc": test_acc, "time":total_elapsed}, f)
 
     with open(os.path.join(output_dir, "history.json"), "w") as f:
         all_metrics = {
