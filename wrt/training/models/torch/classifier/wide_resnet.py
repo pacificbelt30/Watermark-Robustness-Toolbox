@@ -11,6 +11,7 @@ import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.nn.init as init
+from torchinfo import summary
 
 
 def conv3x3(in_planes, out_planes, stride=1):
@@ -280,6 +281,7 @@ class WideResNet_ArgMax(nn.Module):
 def cifar_wide_resnet(**kwargs):
     model = WideResNet_ArgMax(2, 6, 0, 10)
     model.apply(conv_init)
+    summary(model, (256,3,kwargs['image_size'],kwargs['image_size']),depth=4)
     return model
 
 
@@ -287,5 +289,6 @@ def cifar_wide_resnet(**kwargs):
 def cifar_wide_resnet_features(**kwargs):
     model = WideResNet(2, 6, 0, 10)
     model.apply(conv_init)
+    summary(model, (256,3,kwargs['image_size'],kwargs['image_size']),depth=4)
     return model
 
