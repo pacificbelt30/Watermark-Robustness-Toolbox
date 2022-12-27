@@ -84,7 +84,7 @@ def load_null_models_hybrid(device="cuda", image_size=64, num_classes=10, **kwar
             input_shape=(3, image_size, image_size),
             nb_classes=num_classes
         )
-        checkpoint = torch.load(models['path'])
+        checkpoint = torch.load(model['path'])
         wrapper.model.load_state_dict(checkpoint["model"])
         wrapper.optimizer.load_state_dict(checkpoint["optimizer"])
         yield wrapper
