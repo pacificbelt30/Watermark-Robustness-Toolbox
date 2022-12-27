@@ -1,21 +1,20 @@
 wm_scheme:
-  name: wm_frontier_stitching
-  eps: 0.05
+  name: wm_jia
+  snnl_weight: 1
+  trigger_width: 10
+  trigger_height: 10
+  pos: (0, 4, 4),
   num_classes: 10
 
 secret_keys:
-  name: wm_frontier_stitching_keygen
-  key_expansion_factor: 10
-  batch_size: 64
+  name: wm_jia_keygen
   image_size: 64
   num_classes: 10
-
-load_pretrained_source_model:
-  name: load_pretrained_model
-  filename: "outputs/cifar10/wm_experiments/resnet/00001_frontier_stitching/best.pth"
+  source_class: 4
+  target_class: 6
 
 source_model_architecture:
-  name: cifar_wide_resnet_features
+  name: cifar_vit
   image_size: 64
   num_classes: 10
 
@@ -69,7 +68,18 @@ wm_dataset:
   name: CIFAR10DataLoader
   apply_normalization: False
   apply_augmentation: False
+  train: False
+  subset: all
+  root: ~/.wrt/data
+  batch_size: 64
+  image_size: 64
+  num_workers: 16
+
+wm_dataset_target:
+  name: CIFAR10ExtendedDataLoader
   subset: defender
+  apply_normalization: False
+  apply_augmentation: False
   train: True
   root: ~/.wrt/data
   batch_size: 64
@@ -78,11 +88,11 @@ wm_dataset:
 
 dataset:
   name: CIFAR10DataLoader
-  subset: defender
+  subset: all
   root: ~/.wrt/data
   batch_size: 128
   image_size: 64
   num_workers: 16
 
-name: frontier_stitching
-output_dir: outputs/cifar10/decision_thresholds/frontier_stitching/
+name: jia
+output_dir: outputs/cifar10/decision_thresholds/jia

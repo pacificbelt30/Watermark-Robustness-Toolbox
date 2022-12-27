@@ -12,10 +12,10 @@ secret_keys:
 
 load_pretrained_source_model:
   name: load_pretrained_model
-  filename: "outputs/cifar10/wm_experiments/resnet/00001_frontier_stitching/best.pth"
+  filename: "outputs/cifar10/wm_experiments/vit/00004_frontier_stitching/best.pth"
 
 source_model_architecture:
-  name: cifar_wide_resnet_features
+  name: cifar_vit
   image_size: 64
   num_classes: 10
 
