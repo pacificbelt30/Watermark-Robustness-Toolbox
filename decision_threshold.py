@@ -73,11 +73,11 @@ def load_null_models_hybrid(device="cuda", image_size=64, num_classes=10, **kwar
         {"name":"resnet","path":"./outputs/cifar10/null_models_experiments/resnet/00002_null_model/best.pth"},
         {"name":"resnet","path":"./outputs/cifar10/null_models_experiments/resnet/00003_null_model/best.pth"}
     ]
-
+    param = {'image_size':image_size,'num_classes':num_classes}
     for model in models:
         criterion = torch.nn.CrossEntropyLoss()
         wrapper = PyTorchClassifier(
-            model=create_model_fn[model["name"]]().to(device),
+            model=create_model_fn[model["name"]](**param).to(device),
             clip_values=(0, 1),
             loss=criterion,
             optimizer=None,
