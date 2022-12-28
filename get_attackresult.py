@@ -71,6 +71,7 @@ def main():
             wm_name = os.path.basename(args_dict['wm_dir']).split('_')[1]
             arch = os.path.basename(os.path.dirname(args_dict['wm_dir']))
             wm_result_path = os.path.join(args_dict['wm_dir'],'result.json')
+            wm_args_path = os.path.join(args_dict['wm_dir'],'args.json')
             attack_name = os.path.basename(args_dict['attack_config']).split('.')[0]
             if arch not in attack_result:
                 attack_result[arch] = {}
@@ -80,7 +81,25 @@ def main():
                 attack_result[arch][wm_name]['atk'] = {}
             # attack_result[arch][wm_name] = wm_result_path
             wm_result = {}
+            wm_args_dict = {}
             attack_result_list = []
+            source_acc = {}
+            try:
+                with open(wm_args_path,'r') as f:
+                    import json
+                    wm_args_dict = json.loads(f.read())
+                try:
+                    with open(os.path.join(wm_args_dict['pretrained_dir'],'result.json'),'r') as f:
+                        import json
+                        source_acc = json.loads(f.read())
+                except:
+                    import traceback
+                    traceback.print_exc()
+                    continue
+            except:
+                import traceback
+                traceback.print_exc()
+                continue
             try:
                 with open(wm_result_path,'r') as f:
                     import json
@@ -90,7 +109,7 @@ def main():
                 traceback.print_exc()
                 continue
             try:
-                with open(wm_result_path,'r') as f:
+                with open(os.path.abspath(os.path.join(attack_dir, 'result.json')),'r') as f:
                     import json
                     attack_result_dict[attack_name] = json.loads(f.read())
             except:
@@ -98,6 +117,7 @@ def main():
                 traceback.print_exc()
                 continue
             # attack_result[arch][wm_name] = {'wm':wm_result,'atk':attack_result_dict}
+            attack_result[arch]['acc'] = source_acc
             attack_result[arch][wm_name]['wm'] = wm_result
             attack_result[arch][wm_name]['atk'][attack_name] = attack_result_dict[attack_name]
     print(attack_result)
