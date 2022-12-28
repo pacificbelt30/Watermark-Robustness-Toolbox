@@ -74,8 +74,13 @@ def main():
             attack_name = os.path.basename(args_dict['attack_config']).split('.')[0]
             if arch not in attack_result:
                 attack_result[arch] = {}
+            if wm_name not in attack_result[arch]:
+                attack_result[arch][wm_name] = {}
+            if 'atk' not in attack_result[arch][wm_name]:
+                attack_result[arch][wm_name]['atk'] = {}
             # attack_result[arch][wm_name] = wm_result_path
             wm_result = {}
+            attack_result_list = []
             try:
                 with open(wm_result_path,'r') as f:
                     import json
@@ -92,7 +97,9 @@ def main():
                 import traceback
                 traceback.print_exc()
                 continue
-            attack_result[arch][wm_name] = {'wm':wm_result,'atk':attack_result_dict}
+            # attack_result[arch][wm_name] = {'wm':wm_result,'atk':attack_result_dict}
+            attack_result[arch][wm_name]['wm'] = wm_result
+            attack_result[arch][wm_name]['atk'][attack_name] = attack_result_dict[attack_name]
     print(attack_result)
     num_files = len(os.listdir(args.output_dir))
     pre_zero_str = '0'*(5-len(str(num_files)))
