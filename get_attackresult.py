@@ -75,6 +75,7 @@ def main():
             wm_args_path = os.path.join(args_dict['wm_dir'],'args.json') # args.json path
             attack_name = os.path.basename(args_dict['attack_config']).split('.')[0] # attack_config name
             dt_path = os.path.join(args.dt_dir,wm_name) # decision thresholds path
+            dt_path = args.dt_dir # decision thresholds path
             if arch not in attack_result:
                 attack_result[arch] = {}
             if wm_name not in attack_result[arch]:
