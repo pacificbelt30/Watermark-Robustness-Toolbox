@@ -16,6 +16,7 @@ def parse_args():
     parser.add_argument('-o', '--output_dir', type=str, default='./outputs/cifar10/atk_json/', help="Path to output file for all watermarking scheme result")
     parser.add_argument('-r', '--result_dir', type=str, default='./outputs/cifar10/attack_experiments/',
                         help="Path to config file for the watermarking scheme.")
+    parser.add_argument('-d', '--dt_dir', type=str, default='./outputs/cifar10/decision_thresholds_experiments/', help="Path to decision_thresholds result")
     parser.add_argument('--no-cuda', action='store_true')
     parser.add_argument("--pretrained_dir", default="./outputs/cifar10/null_models/vit/00000_null_model")
     parser.add_argument("--filename", type=str, default="best.pth", help="Filepath to the pretrained model.")
@@ -68,15 +69,18 @@ def main():
                 import traceback
                 traceback.print_exc()
                 continue
-            wm_name = os.path.basename(args_dict['wm_dir']).split('_')[1]
-            arch = os.path.basename(os.path.dirname(args_dict['wm_dir']))
-            wm_result_path = os.path.join(args_dict['wm_dir'],'result.json')
-            wm_args_path = os.path.join(args_dict['wm_dir'],'args.json')
-            attack_name = os.path.basename(args_dict['attack_config']).split('.')[0]
+            wm_name = os.path.basename(args_dict['wm_dir']).split('_')[1] # Watermark scheme name
+            arch = os.path.basename(os.path.dirname(args_dict['wm_dir'])) # model architecture
+            wm_result_path = os.path.join(args_dict['wm_dir'],'result.json') # result.json path
+            wm_args_path = os.path.join(args_dict['wm_dir'],'args.json') # args.json path
+            attack_name = os.path.basename(args_dict['attack_config']).split('.')[0] # attack_config name
+            dt_path = os.path.join(args.dt_dir,wm_name) # decision thresholds path
             if arch not in attack_result:
                 attack_result[arch] = {}
             if wm_name not in attack_result[arch]:
                 attack_result[arch][wm_name] = {}
+            if 'decision_thresholds' not in attack_result[arch][wm_name]:
+                attack_result[arch][wm_name]['decision_thresholds'] = {}
             if 'atk' not in attack_result[arch][wm_name]:
                 attack_result[arch][wm_name]['atk'] = {}
             # attack_result[arch][wm_name] = wm_result_path
@@ -84,6 +88,17 @@ def main():
             wm_args_dict = {}
             attack_result_list = []
             source_acc = {}
+            for i, dt_dir in enumerate(os.listdir(dt_path)):
+                if wm_name == os.path.basename(dt_dir).split('_')[1]:
+                    try:
+                        with open(os.path.join(dt_dir,'decision_threshold_0.05.json'),'r') as f:
+                            import json
+                            attack_result[arch][wm_name]['decision_thresholds'] = json.loads(f.read())
+                    except:
+                        import traceback
+                        traceback.print_exc()
+                        continue
+                    break
             try:
                 with open(wm_args_path,'r') as f:
                     import json
