@@ -74,8 +74,8 @@ def main():
             wm_result_path = os.path.join(args_dict['wm_dir'],'result.json') # result.json path
             wm_args_path = os.path.join(args_dict['wm_dir'],'args.json') # args.json path
             attack_name = os.path.basename(args_dict['attack_config']).split('.')[0] # attack_config name
-            dt_path = os.path.join(args.dt_dir,wm_name) # decision thresholds path
-            dt_path = args.dt_dir # decision thresholds path
+            dt_path = os.path.join(args.dt_dir,arch) # decision thresholds path
+            # dt_path = args.dt_dir # decision thresholds path
             if arch not in attack_result:
                 attack_result[arch] = {}
             if wm_name not in attack_result[arch]:
@@ -92,7 +92,7 @@ def main():
             for i, dt_dir in enumerate(os.listdir(dt_path)):
                 if wm_name == os.path.basename(dt_dir).split('_')[1]:
                     try:
-                        with open(os.path.join(dt_dir,'decision_threshold_0.05.json'),'r') as f:
+                        with open(os.path.join(os.path.join(dt_path,dt_dir),'decision_threshold_0.05.json'),'r') as f:
                             import json
                             attack_result[arch][wm_name]['decision_thresholds'] = json.loads(f.read())
                     except:
