@@ -11,7 +11,6 @@ import torch
 
 import numpy as np
 import matplotlib.pyplot as plt
-%matplotlib inline
 
 from wrt.classifiers.pytorch import PyTorchClassifier
 from wrt.training.datasets.utils import collect_n_samples
