@@ -49,17 +49,7 @@ null_models:
           'outputs/cifar10/null_models/resnet/00016_null_model/best.pth',
           'outputs/cifar10/null_models/resnet/00017_null_model/best.pth',
           'outputs/cifar10/null_models/resnet/00018_null_model/best.pth',
-          'outputs/cifar10/null_models/resnet/00019_null_model/best.pth',
-          'outputs/cifar10/null_models/resnet/00020_null_model/best.pth',
-          'outputs/cifar10/null_models/resnet/00021_null_model/best.pth',
-          'outputs/cifar10/null_models/resnet/00022_null_model/best.pth',
-          'outputs/cifar10/null_models/resnet/00023_null_model/best.pth',
-          'outputs/cifar10/null_models/resnet/00024_null_model/best.pth',
-          'outputs/cifar10/null_models/resnet/00025_null_model/best.pth',
-          'outputs/cifar10/null_models/resnet/00026_null_model/best.pth',
-          'outputs/cifar10/null_models/resnet/00027_null_model/best.pth',
-          'outputs/cifar10/null_models/resnet/00028_null_model/best.pth',
-          'outputs/cifar10/null_models/resnet/00029_null_model/best.pth'
+          'outputs/cifar10/null_models/resnet/00019_null_model/best.pth'
   ]
   num_classes: 10
   image_size: 64

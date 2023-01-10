@@ -10,6 +10,11 @@ secret_keys:
   num_classes: 10
   image_size: 64
 
+load_pretrained_source_model:
+  name: load_pretrained_model
+  filename: "outputs/cifar10/wm_experiments/r50vit/00005_blackmarks/best.pth"
+
+
 source_model_architecture:
   name: cifar_r50_vit
   image_size: 64
