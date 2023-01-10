@@ -44,8 +44,8 @@ def judge(json_path):
                 decision_thresholds[key][atk].append(wmacc - dt)
                 print(after-before,wmacc)
 
-    fmark = ''
-    tmark = ''
+    tmark = '' # Success attack and watermarking method is vuln.
+    fmark = '' # Failed attack and watermarking method is safe.
     loss_thresholds = 0.05
     arch = 'vit'
     for key in result[arch].keys():
@@ -55,7 +55,7 @@ def judge(json_path):
             for loss,dt in zip(steel_losses[key][atk],decision_thresholds[key][atk]):
                 # print(arch,key,atk,loss,dt,(loss>loss_thresholds and dt > 0.0))
                 # table[key][atk].append(tmark if ((loss <= loss_thresholds) and (dt >= 0.0)) else fmark)
-                table[key][atk] += (tmark if ((loss <= loss_thresholds) and (dt >= 0.0)) else fmark) + ' / '
+                table[key][atk] += (tmark if ((loss+loss_thresholds > 0.0) and (dt < 0.0)) else fmark) + ' / '
             table[key][atk] = table[key][atk][:-2]
 
     print(pd.DataFrame(data=table))
@@ -89,7 +89,7 @@ def judge_plot(table:dict, archs):
     # plt.show()
 
 def main():
-    file = './outputs/cifar10/atk_json/result.json'
+    file = './outputs/cifar10/atk_json/result1.json'
     judge(file)
 
 if __name__ == "__main__":
