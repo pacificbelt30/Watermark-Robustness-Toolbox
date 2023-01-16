@@ -19,6 +19,10 @@ source_model_architecture:
   image_size: 64
   num_classes: 10
 
+load_pretrained_source_model:
+  name: load_pretrained_model
+  filename: "outputs/cifar10/wm_experiments/vit/00004_frontier_stitching/best.pth"
+
 null_model_architecture:
   name: cifar_wide_resnet
   image_size: 64
