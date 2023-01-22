@@ -156,7 +156,7 @@ def __compute_decision_threshold(wm_accs, p_value=0.05):
         print(f"[ERROR] CDF never reaches {1 - p_value}")
         return float(np.min(x))
 
-    return float(x[np.where(y >= 1 - p_value)[0]][0])
+    return float(x[np.where(y >= 1 - p_value)[0]][0]), mean, std
 
 
 def main():
@@ -212,7 +212,8 @@ def main():
         source_model = config.load_pretrained_source_model(source_model)
 
     # Define keylengths (for plotting the graph)
-    keylengths = np.arange(10, 101, 10)
+    # keylengths = np.arange(10, 101, 10)
+    keylengths = np.array([100])
 
     result_dict = {}
     key_dict = {}  # Cache the keys.
@@ -254,10 +255,16 @@ def main():
         previous_model = null_model
 
     # Compute a decision threshold on the two variables (keylength and null models).
+    means,stds = [],[]
+    accs = []
     x, y = [], []
     for keylen, wm_accs in result_dict.items():
+        computed_y, mean, std = __compute_decision_threshold(wm_accs, p_value=args.p_value)
         x.append(keylen)
-        y.append(__compute_decision_threshold(wm_accs, p_value=args.p_value))
+        y.append(computed_y)
+        means.append(mean)
+        stds.append(std)
+        accs.append(wm_accs)
 
     y_norm = []
     for x_i, y_i in zip(x, y):
@@ -289,7 +296,10 @@ def main():
         json.dump({
             "name": experiment_name,
             "x": x,
-            "y": y
+            "y": y,
+            "mean": means,
+            "std": stds,
+            "wm_acc": accs
         }, f)
     print(f"Saved results to '{os.path.abspath(file)}'.")
 
