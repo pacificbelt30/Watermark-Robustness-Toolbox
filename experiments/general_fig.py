@@ -80,7 +80,7 @@ def plot_embed_loss(filename, archs:list, wms:list, result_dict:dict, archs_name
     # plt.figure(figsize=(8,5))
     # plt.figure(figsize=(16,9))
     plt.figure(figsize=(12,7))
-    plt.title('The Embedding loss',fontsize=20)
+    plt.title('The Embedding Loss',fontsize=20)
     # labels = plt.get_xticklabels()
     # plt.setp(labels, rotation=30, fontsize=16);
     # plt.set_ylim(lim[0],lim[1])
@@ -395,5 +395,5 @@ if __name__ == "__main__":
     path = ['./outputs/cifar10/json/result_00016.json','./outputs/cifar10/json/result_00017.json','./outputs/cifar10/json/result_00018.json','./outputs/cifar10/json/result_00019.json']
     load_result_from_jsons(path)
     plot_decision_threshold_dist_baseline('./outputs/cifar10/atk_json/alldt.json','outputs/cifar10/png/dtbaseline')
-    plot_wm_acc_extend_jia('./outputs/cifar10/atk_json/extend.json','test2.png')
-    plot_embed_loss_extend_jia('./outputs/cifar10/atk_json/extend.json','test.png')
+    plot_wm_acc_extend_jia('./outputs/cifar10/atk_json/extend.json','outputs/cifar10/png/extend_jia_wm_acc.png')
+    plot_embed_loss_extend_jia('./outputs/cifar10/atk_json/extend.json','outputs/cifar10/png/extend_jia_loss.png')
